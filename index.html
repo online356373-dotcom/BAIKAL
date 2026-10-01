@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Полная фотогалерея озера Байкал</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f7f6;
+        }
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://unsplash.com') no-repeat center center/cover;
+            height: 45vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+        }
+        header h1 {
+            font-size: 3.5rem;
+            text-shadow: 2px 2px 15px rgba(0,0,0,0.6);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 1.5rem;
+            color: #2c3e50;
+            border-left: 5px solid #2980b9;
+            padding-left: 10px;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .gallery-item {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+        }
+        .gallery-item .caption {
+            padding: 1rem;
+            font-weight: 500;
+            text-align: center;
+            color: #34495e;
+            font-size: 0.95rem;
+        }
+        /* Стили для модального окна (увеличение фото) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+        .modal-caption {
+            position: absolute;
+            bottom: 30px;
+            color: #fff;
+            font-size: 1.2rem;
+            text-align: center;
+            width: 100%;
+        }
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .close-btn:hover {
+            color: #bbb;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Галерея Озера Байкал</h1>
+    </header>
+
+    <div class="container">
+        <!-- СЕКЦИЯ 1: ИЗБРАННЫЕ ВИДЫ -->
+        <h2 class="section-title">🏞️ Живописные панорамы Байкала</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="https://unsplash.com" alt="Кристально чистый зимний лед">
+                <div class="caption">Кристально чистый зимний лед</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://unsplash.com" alt="Живописный закат на побережье">
+                <div class="caption">Живописный закат на побережье</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://unsplash.com" alt="Величественные прибрежные скалы">
+                <div class="caption">Величественные прибрежные скалы</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://unsplash.com" alt="Первозданная природа Сибири">
+                <div class="caption">Первозданная природа Сибири</div>
+            </div>
+        </div>
+
+        <!-- СЕКЦИЯ 2: ЗИМА -->
+        <h2 class="section-title">❄️ Магия зимнего льда</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="https://unsplash.com" alt="Глубокие трещины в прозрачной толще">
+                <div class="caption">Глубокие трещины в прозрачной толще</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://unsplash.com" alt="Кристальные узоры зимнего озера">
+                <div class="caption">Кристальные узоры зимнего озера</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://unsplash.com" alt="Застывшие пузыри газа во льду">
+                <div class="caption">Застывшие пузыри газа во льду</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://unsplash.com" alt="Ледяные гроты и набрызги на скалах">
+                <div class="caption">Ледяные гроты и набрызги на скалах</div>
+            </div>
+        </div>
+
+        <!-- СЕКЦИЯ 3: ЛЕТО -->
+        <h2 class="section-title">☀️ Остров Ольхон и летние пейзажи</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="https://unsplash.com" alt="Знаменитый мыс Бурхан (Шаманка)">
+                <div class="caption">Знаменитый мыс Бурхан (Шаманка)</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://unsplash.com" alt="Золотой закат над гладью Байкала">
+                <div class="caption">Золотой закат над гладью Байкала</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://unsplash.com" alt="Прогулки на лодках у скалистых берегов">
+                <div class="caption">Прогулки на лодках у скалистых берегов</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://unsplash.com" alt="Живописное побережье сибирского моря">
+                <div class="caption">Живописное побережье сибирского моря</div>
+            </div>
+        </div>
+
+        <!-- СЕКЦИЯ 4: НЕРПА -->
+        <h2 class="section-title">🦭 Уникальная байкальская нерпа</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="https://wikimedia.org" alt="Любопытный взгляд эндемика Байкала">
+                <div class="caption">Любопытный взгляд эндемика Байкала</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://wikimedia.org" alt="Единственный в мире пресноводный тюлень">
+                <div class="caption">Единственный в мире пресноводный тюлень</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://wikimedia.org" alt="Очаровательный пушистый кумукан (белёк)">
+                <div class="caption">Очаровательный пушистый кумукан (белёк)</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://wikimedia.org" alt="Малыш нерпы греется на весеннем солнце">
+                <div class="caption">Малыш нерпы греется на весеннем солнце</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для просмотра картинок -->
+    <div id="photoModal" class="modal">
+        <span class="close-btn">&times;</span>
+        <img class="modal-content" id="modalImg">
+        <div id="photoModal" class="modal-caption" id="modalCaption"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Большой фотоархив Байкала. Все права защищены.</p>
+    </footer>
+
+    <script>
+        const modal = document.getElementById("photoModal");
+        const modalImg = document.getElementById("modalImg");
+        const captionText = document.getElementById("modalCaption");
+        const closeBtn = document.querySelector(".close-btn");
+
+        document.querySelectorAll(".gallery-item").forEach(item => {
+            item.addEventListener("click", function() {
+                const img = this.querySelector("img");
+                modal.style.display = "flex";
+                modalImg.src = img.src;
+                if (captionText) {
+                    captionText.innerHTML = img.alt;
+                }
