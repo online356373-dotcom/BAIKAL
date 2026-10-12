@@ -1,238 +1,588 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Полная фотогалерея озера Байкал</title>
+    <meta name="description" content="Откройте для себя озеро Байкал — самое глубокое озеро планеты, его природу, животных и удивительные места.">
+    <title>Байкал — жемчужина Сибири</title>
+
     <style>
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: Arial, sans-serif;
+            background: #071a2b;
+            color: #f4f9ff;
             line-height: 1.6;
-            color: #333;
-            background-color: #f4f7f6;
         }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
         header {
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://unsplash.com') no-repeat center center/cover;
-            height: 45vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: #fff;
-        }
-        header h1 {
-            font-size: 3.5rem;
-            text-shadow: 2px 2px 15px rgba(0,0,0,0.6);
-        }
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        .section-title {
-            font-size: 2rem;
-            margin: 3rem 0 1.5rem;
-            color: #2c3e50;
-            border-left: 5px solid #2980b9;
-            padding-left: 10px;
-        }
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-        .gallery-item {
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-        .gallery-item:hover {
-            transform: translateY(-5px);
-        }
-        .gallery-item img {
-            width: 100%;
-            height: 240px;
-            object-fit: cover;
-            display: block;
-        }
-        .gallery-item .caption {
-            padding: 1rem;
-            font-weight: 500;
-            text-align: center;
-            color: #34495e;
-            font-size: 0.95rem;
-        }
-        /* Стили для модального окна (увеличение фото) */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            justify-content: center;
+            padding: 24px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        nav a {
+            font-size: 14px;
+            color: #e1efff;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #65d9ff;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 10%;
+            background:
+                linear-gradient(90deg, rgba(3, 18, 34, .85), rgba(3, 18, 34, .15)),
+                linear-gradient(0deg, #071a2b, transparent 30%),
+                url("https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2000&q=85")
+                center/cover no-repeat;
+        }
+
+        .hero-content {
+            max-width: 750px;
+        }
+
+        .eyebrow {
+            color: #66dcff;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            font-size: clamp(48px, 8vw, 100px);
+            line-height: 1.02;
+            margin-bottom: 25px;
+        }
+
+        h1 span {
+            color: #65d9ff;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 550px;
+            color: #d5e5f3;
+            margin-bottom: 32px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 14px 28px;
+            background: #46c7ed;
+            color: #061a2c;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: .3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            background: #a1ebff;
+        }
+
+        section {
+            padding: 100px 10%;
+        }
+
+        .section-label {
+            color: #5bd5ff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            font-size: clamp(32px, 5vw, 52px);
+            line-height: 1.15;
+            margin-bottom: 22px;
+        }
+
+        .intro {
+            max-width: 720px;
+            color: #b8cddd;
+            font-size: 17px;
+        }
+
+        .facts {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-top: 45px;
+        }
+
+        .fact {
+            padding: 28px 22px;
+            border: 1px solid #24465e;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .035);
+            transition: .3s;
+        }
+
+        .fact:hover {
+            transform: translateY(-5px);
+            border-color: #55d7ff;
+        }
+
+        .fact strong {
+            display: block;
+            font-size: 35px;
+            color: #69ddff;
+            margin-bottom: 8px;
+        }
+
+        .fact p {
+            font-size: 14px;
+            color: #b8cddd;
+        }
+
+        .nature {
+            background: #0b2235;
+        }
+
+        .nature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
             align-items: center;
         }
-        .modal-content {
-            max-width: 90%;
-            max-height: 85vh;
-            border-radius: 4px;
-            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+
+        .nature-image {
+            min-height: 430px;
+            border-radius: 24px;
+            background:
+                url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=85")
+                center/cover;
         }
-        .modal-caption {
-            position: absolute;
-            bottom: 30px;
-            color: #fff;
-            font-size: 1.2rem;
-            text-align: center;
+
+        .nature-text p {
+            color: #b8cddd;
+            margin-bottom: 18px;
+        }
+
+        .places-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            margin-top: 40px;
+        }
+
+        .place {
+            border-radius: 18px;
+            overflow: hidden;
+            background: #102b40;
+            transition: .3s;
+        }
+
+        .place:hover {
+            transform: translateY(-6px);
+        }
+
+        .place img {
+            display: block;
             width: 100%;
+            height: 230px;
+            object-fit: cover;
         }
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 35px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
+
+        .place-info {
+            padding: 24px;
         }
-        .close-btn:hover {
-            color: #bbb;
+
+        .place-info h3 {
+            font-size: 21px;
+            margin-bottom: 10px;
         }
-        footer {
-            background-color: #2c3e50;
-            color: #fff;
+
+        .place-info p {
+            font-size: 14px;
+            color: #b8cddd;
+        }
+
+        .quote {
             text-align: center;
-            padding: 2rem;
-            margin-top: 5rem;
+            background:
+                linear-gradient(rgba(3, 17, 31, .8), rgba(3, 17, 31, .9)),
+                url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=85")
+                center/cover;
+        }
+
+        .quote blockquote {
+            max-width: 850px;
+            margin: 0 auto;
+            font-size: clamp(24px, 4vw, 42px);
+            font-weight: bold;
+            line-height: 1.4;
+        }
+
+        .quote p {
+            margin-top: 22px;
+            color: #6edbff;
+        }
+
+        .quiz {
+            max-width: 700px;
+            margin: 35px auto 0;
+            padding: 30px;
+            background: #102b40;
+            border-radius: 20px;
+        }
+
+        .quiz h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-option {
+            display: block;
+            padding: 13px 16px;
+            border: 1px solid #35536b;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .quiz-option:hover {
+            border-color: #65d9ff;
+            background: #173950;
+        }
+
+        .quiz-option input {
+            margin-right: 10px;
+            accent-color: #65d9ff;
+        }
+
+        #result {
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 35px 10%;
+            text-align: center;
+            border-top: 1px solid #244157;
+            color: #92aabd;
+            font-size: 13px;
+        }
+
+        footer span {
+            color: #65d9ff;
+        }
+
+        @media (max-width: 900px) {
+            .facts {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .places-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nature-image {
+                min-height: 320px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 20px 6%;
+                align-items: flex-start;
+            }
+
+            nav {
+                gap: 12px;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            nav a {
+                font-size: 12px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .hero {
+                padding: 130px 7% 90px;
+            }
+
+            section {
+                padding: 70px 7%;
+            }
+
+            .facts,
+            .places-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .fact strong {
+                font-size: 30px;
+            }
+
+            .place img {
+                height: 240px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <header>
-        <h1>Галерея Озера Байкал</h1>
-    </header>
+<header>
+    <a class="logo" href="#home">БАЙКАЛ.</a>
 
-    <div class="container">
-        <!-- СЕКЦИЯ 1: ИЗБРАННЫЕ ВИДЫ -->
-        <h2 class="section-title">🏞️ Живописные панорамы Байкала</h2>
-        <div class="gallery">
-            <div class="gallery-item">
-                <img src="https://unsplash.com" alt="Кристально чистый зимний лед">
-                <div class="caption">Кристально чистый зимний лед</div>
+    <nav>
+        <a href="#about">О Байкале</a>
+        <a href="#nature">Природа</a>
+        <a href="#places">Места</a>
+        <a href="#quiz">Тест</a>
+    </nav>
+</header>
+
+<main>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="eyebrow">Сердце Сибири</div>
+            <h1>Море<br>внутри <span>земли.</span></h1>
+            <p>
+                Байкал — удивительный мир прозрачной воды,
+                древних гор и бескрайних горизонтов.
+                Место, которое невозможно забыть.
+            </p>
+            <a href="#about" class="button">Открыть Байкал ↓</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-label">01 — Знакомство</div>
+        <h2>Больше, чем озеро</h2>
+        <p class="intro">
+            Байкал находится на юге Восточной Сибири.
+            Это самое глубокое озеро в мире и один из крупнейших
+            природных резервуаров пресной поверхностной воды.
+            Его возраст, экосистема и пейзажи делают его по-настоящему уникальным.
+        </p>
+
+        <div class="facts">
+            <div class="fact">
+                <strong>1 642 м</strong>
+                <p>Максимальная глубина озера</p>
             </div>
-            <div class="gallery-item">
-                <img src="https://unsplash.com" alt="Живописный закат на побережье">
-                <div class="caption">Живописный закат на побережье</div>
+            <div class="fact">
+                <strong>≈ 25 млн</strong>
+                <p>Лет — примерный возраст Байкала</p>
             </div>
-            <div class="gallery-item">
-                <img src="https://unsplash.com" alt="Величественные прибрежные скалы">
-                <div class="caption">Величественные прибрежные скалы</div>
+            <div class="fact">
+                <strong>636 км</strong>
+                <p>Примерная длина озера</p>
             </div>
-            <div class="gallery-item">
-                <img src="https://unsplash.com" alt="Первозданная природа Сибири">
-                <div class="caption">Первозданная природа Сибири</div>
+            <div class="fact">
+                <strong>20%</strong>
+                <p>Около пятой части мировых запасов незамёрзшей пресной поверхностной воды находится здесь</p>
             </div>
         </div>
+    </section>
 
-        <!-- СЕКЦИЯ 2: ЗИМА -->
-        <h2 class="section-title">❄️ Магия зимнего льда</h2>
-        <div class="gallery">
-            <div class="gallery-item">
-                <img src="https://unsplash.com" alt="Глубокие трещины в прозрачной толще">
-                <div class="caption">Глубокие трещины в прозрачной толще</div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://unsplash.com" alt="Кристальные узоры зимнего озера">
-                <div class="caption">Кристальные узоры зимнего озера</div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://unsplash.com" alt="Застывшие пузыри газа во льду">
-                <div class="caption">Застывшие пузыри газа во льду</div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://unsplash.com" alt="Ледяные гроты и набрызги на скалах">
-                <div class="caption">Ледяные гроты и набрызги на скалах</div>
+    <section class="nature" id="nature">
+        <div class="nature-grid">
+            <div class="nature-image" role="img" aria-label="Горное озеро среди лесов"></div>
+
+            <div class="nature-text">
+                <div class="section-label">02 — Живая природа</div>
+                <h2>Мир, которого нет больше нигде</h2>
+                <p>
+                    В Байкале обитает множество эндемичных видов —
+                    организмов, которые встречаются только в этом регионе.
+                </p>
+                <p>
+                    Самый знаменитый обитатель — байкальская нерпа,
+                    единственный вид тюленя, постоянно живущий в пресной воде.
+                </p>
+                <p>
+                    Чистота озера и сохранение его экосистемы имеют
+                    огромное значение для будущих поколений.
+                </p>
+                <a href="#places" class="button">Исследовать места</a>
             </div>
         </div>
+    </section>
 
-        <!-- СЕКЦИЯ 3: ЛЕТО -->
-        <h2 class="section-title">☀️ Остров Ольхон и летние пейзажи</h2>
-        <div class="gallery">
-            <div class="gallery-item">
-                <img src="https://unsplash.com" alt="Знаменитый мыс Бурхан (Шаманка)">
-                <div class="caption">Знаменитый мыс Бурхан (Шаманка)</div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://unsplash.com" alt="Золотой закат над гладью Байкала">
-                <div class="caption">Золотой закат над гладью Байкала</div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://unsplash.com" alt="Прогулки на лодках у скалистых берегов">
-                <div class="caption">Прогулки на лодках у скалистых берегов</div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://unsplash.com" alt="Живописное побережье сибирского моря">
-                <div class="caption">Живописное побережье сибирского моря</div>
-            </div>
+    <section id="places">
+        <div class="section-label">03 — Путешествие</div>
+        <h2>Места, которые впечатляют</h2>
+        <p class="intro">
+            У Байкала множество лиц: скалистые берега, таёжные леса,
+            песчаные бухты и знаменитый прозрачный лёд зимой.
+        </p>
+
+        <div class="places-grid">
+            <article class="place">
+                <img
+                    src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"
+                    alt="Природный пейзаж с горами"
+                    loading="lazy"
+                >
+                <div class="place-info">
+                    <h3>Остров Ольхон</h3>
+                    <p>
+                        Крупнейший остров Байкала, известный степными
+                        пейзажами, скалами и мысом Бурхан.
+                    </p>
+                </div>
+            </article>
+
+            <article class="place">
+                <img
+                    src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=80"
+                    alt="Заснеженные горные вершины"
+                    loading="lazy"
+                >
+                <div class="place-info">
+                    <h3>Байкальские горы</h3>
+                    <p>
+                        Горные хребты окружают озеро и создают
+                        впечатляющие панорамы в любое время года.
+                    </p>
+                </div>
+            </article>
+
+            <article class="place">
+                <img
+                    src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=900&q=80"
+                    alt="Голубая вода и волны"
+                    loading="lazy"
+                >
+                <div class="place-info">
+                    <h3>Прозрачная вода</h3>
+                    <p>
+                        Летом Байкал притягивает путешественников
+                        прохладной водой, бухтами и удивительными видами.
+                    </p>
+                </div>
+            </article>
         </div>
+    </section>
 
-        <!-- СЕКЦИЯ 4: НЕРПА -->
-        <h2 class="section-title">🦭 Уникальная байкальская нерпа</h2>
-        <div class="gallery">
-            <div class="gallery-item">
-                <img src="https://wikimedia.org" alt="Любопытный взгляд эндемика Байкала">
-                <div class="caption">Любопытный взгляд эндемика Байкала</div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://wikimedia.org" alt="Единственный в мире пресноводный тюлень">
-                <div class="caption">Единственный в мире пресноводный тюлень</div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://wikimedia.org" alt="Очаровательный пушистый кумукан (белёк)">
-                <div class="caption">Очаровательный пушистый кумукан (белёк)</div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://wikimedia.org" alt="Малыш нерпы греется на весеннем солнце">
-                <div class="caption">Малыш нерпы греется на весеннем солнце</div>
-            </div>
+    <section class="quote">
+        <blockquote>
+            «Сохраняя Байкал сегодня, мы сохраняем чудо для будущего».
+        </blockquote>
+        <p>Береги природу. Оставляй только следы.</p>
+    </section>
+
+    <section id="quiz">
+        <div class="section-label">04 — Проверь себя</div>
+        <h2 style="text-align:center">Насколько хорошо ты знаешь Байкал?</h2>
+        <p class="intro" style="text-align:center; margin:0 auto">
+            Ответь на вопрос и узнай результат!
+        </p>
+
+        <div class="quiz">
+            <h3>Какова максимальная глубина Байкала?</h3>
+
+            <label class="quiz-option">
+                <input type="radio" name="answer" value="a">
+                500 метров
+            </label>
+
+            <label class="quiz-option">
+                <input type="radio" name="answer" value="b">
+                1 642 метра
+            </label>
+
+            <label class="quiz-option">
+                <input type="radio" name="answer" value="c">
+                3 000 метров
+            </label>
+
+            <button class="button" onclick="checkAnswer()">
+                Проверить ответ
+            </button>
+
+            <p id="result" aria-live="polite"></p>
         </div>
-    </div>
+    </section>
+</main>
 
-    <!-- Модальное окно для просмотра картинок -->
-    <div id="photoModal" class="modal">
-        <span class="close-btn">&times;</span>
-        <img class="modal-content" id="modalImg">
-        <div id="photoModal" class="modal-caption" id="modalCaption"></div>
-    </div>
+<footer>
+    <p>Создано с любовью к природе · <span>БАЙКАЛ</span> © <span id="year"></span></p>
+    <p>Береги нашу планету 🌍</p>
+</footer>
 
-    <footer>
-        <p>&copy; 2026 Большой фотоархив Байкала. Все права защищены.</p>
-    </footer>
+<script>
+    function checkAnswer() {
+        const answer = document.querySelector(
+            'input[name="answer"]:checked'
+        );
+        const result = document.getElementById("result");
 
-    <script>
-        const modal = document.getElementById("photoModal");
-        const modalImg = document.getElementById("modalImg");
-        const captionText = document.getElementById("modalCaption");
-        const closeBtn = document.querySelector(".close-btn");
+        if (!answer) {
+            result.textContent = "Сначала выбери вариант ответа.";
+            result.style.color = "#ffd166";
+            return;
+        }
 
-        document.querySelectorAll(".gallery-item").forEach(item => {
-            item.addEventListener("click", function() {
-                const img = this.querySelector("img");
-                modal.style.display = "flex";
-                modalImg.src = img.src;
-                if (captionText) {
-                    captionText.innerHTML = img.alt;
-                }
+        if (answer.value === "b") {
+            result.textContent =
+                "Верно! Максимальная глубина Байкала — 1 642 метра 🎉";
+            result.style.color = "#6ee7b7";
+        } else {
+            result.textContent =
+                "Пока неверно. Попробуй ещё раз!";
+            result.style.color = "#ffb4a2";
+        }
+    }
+
+    document.getElementById("year").textContent =
+        new Date().getFullYear();
+</script>
+
+</body>
+</html>
